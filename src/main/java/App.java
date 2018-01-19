@@ -109,21 +109,24 @@ public class App {
             model.put("type",type);
             return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
-        get("/breed/:id/update", (request, response) -> {
+        get("/type/:typeId/breed/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             int idBreed = Integer.parseInt(request.params("id"));
+            int idType = Integer.parseInt(request.params("typeId"));
             Breed editBreed = breedDao.findById(idBreed);
             model.put("editBreed", editBreed);
+            model.put("idType",idType);
             return new ModelAndView(model, "breed/breed-form.hbs");
         }, new HandlebarsTemplateEngine());
-        post("/breed/:id/update", (request, response) -> {
+        post("/type/:typeId/breed/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             String nameUpdate = request.queryParams("nameUpdate");
             String descriptionUpdate = request.queryParams("descriptionUpdate");
             int idBreed = Integer.parseInt(request.params("id"));
-            Breed editBreed = breedDao.findById(idBreed);
+            int idType = Integer.parseInt(request.params("typeId"));
             breedDao.update(idBreed,nameUpdate, descriptionUpdate);
             model.put("breed", breedDao.findById(idBreed));
+            model.put("idType",idType);
             return new ModelAndView(model, "breed/breed-detail.hbs");
         }, new HandlebarsTemplateEngine());
         get("/type/:typeId/breed/:breedId/delete", (request, response) -> {
@@ -138,10 +141,12 @@ public class App {
             model.put("breeds", breeds);
             return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
-        get("/breed/:id/view", (request, response) -> {
+        get("type/:typeId/breed/:breedId/view", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            int idBreed = Integer.parseInt(request.params("id"));
+            int idType = Integer.parseInt(request.params("typeId"));
+            int idBreed = Integer.parseInt(request.params("breedId"));
             Breed breed = breedDao.findById(idBreed);
+            model.put("idType",idType);
             model.put("breed", breed);
             return new ModelAndView(model, "breed/breed-detail.hbs");
         }, new HandlebarsTemplateEngine());
