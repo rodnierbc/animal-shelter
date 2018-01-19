@@ -89,4 +89,12 @@ public class Sql2oBreedDao implements BreedDao {
             System.out.println(ex);
         }
     }
+
+    @Override
+    public List<Breed> getAll() {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM breeds")
+                    .executeAndFetch(Breed.class);
+        }
+    }
 }

@@ -151,14 +151,14 @@ public class App {
             return new ModelAndView(model, "breed/breed-detail.hbs");
         }, new HandlebarsTemplateEngine());
         //animal ---------------------------------------------
-//        get("/animal/new", (request, response) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
-//            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();
-//            model.put("types", types);
-//            model.put("breeds", breeds);
-//            return new ModelAndView(model, "animal/animal-form.hbs");
-//        }, new HandlebarsTemplateEngine());
+        get("/animal/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
+            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();//need to change
+            model.put("types", types);
+            model.put("breeds", breeds);
+            return new ModelAndView(model, "animal/animal-form.hbs");
+        }, new HandlebarsTemplateEngine());
 
     }
 }

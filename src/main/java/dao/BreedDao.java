@@ -11,6 +11,8 @@ public interface BreedDao {
     //read
     List<Breed> getAllByTypeId(int typeId);
 
+    List<Breed> getAll();
+
     Breed findById(int id);
 
     //update
