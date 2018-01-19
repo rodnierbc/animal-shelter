@@ -27,7 +27,7 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "type/type-form.hbs");
         }, new HandlebarsTemplateEngine());
-        get("/", (request, response) -> {
+        get("/type", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
             model.put("types", types);
@@ -56,9 +56,10 @@ public class App {
             String nameUpdate = request.queryParams("nameUpdate");
             String descriptionUpdate = request.queryParams("descriptionUpdate");
             int idType = Integer.parseInt(request.params("id"));
-            Type editType = typeDao.findById(idType);
+            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAllByTypeId(idType);
             typeDao.update(idType,nameUpdate, descriptionUpdate);
             model.put("type", typeDao.findById(idType));
+            model.put("breeds", breeds);
             return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
         get("/type/:id/delete", (request, response) -> {
@@ -74,7 +75,9 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             int idType = Integer.parseInt(request.params("id"));
             Type type = typeDao.findById(idType);
+            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAllByTypeId(idType);
             model.put("type", type);
+            model.put("breeds",breeds);
             return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
@@ -100,9 +103,11 @@ public class App {
             int typeId = Integer.parseInt(request.params("id"));
             Breed breed = new Breed(name, description, typeId);
             breedDao.add(breed);
+            Type type = typeDao.findById(typeId);
             ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAllByTypeId(typeId);
             model.put("breeds", breeds);
-            return new ModelAndView(model, "breed/index.hbs");
+            model.put("type",type);
+            return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
         get("/breed/:id/update", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
@@ -125,11 +130,13 @@ public class App {
             Map<String, Object> model = new HashMap<>();
             int idType = Integer.parseInt(request.params("typeId"));
             int idBreed= Integer.parseInt(request.params("breedId"));
+            Type type = typeDao.findById(idType);
             breedDao.deleteById(idBreed);
             ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAllByTypeId(idType);
+            model.put("type",type);
             model.put("delete","delete");
             model.put("breeds", breeds);
-            return new ModelAndView(model, "breed/index.hbs");
+            return new ModelAndView(model, "type/type-detail.hbs");
         }, new HandlebarsTemplateEngine());
         get("/breed/:id/view", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
