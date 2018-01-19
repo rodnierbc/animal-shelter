@@ -1,0 +1,111 @@
+{{#partial "content"}}
+
+{{#if editAnimal}}
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Edit Type</h3>
+    </div>
+    <div class="panel-body">
+        <form action="/type/{{editType.id}}/update" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="nameUpdate" name="nameUpdate" class="form-control input-sm" type="text" value="{{editType.name}}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Description</label>
+                        <input id="descriptionUpdate" name="descriptionUpdate" class="form-control input-sm" type="text" value="{{editType.description}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="submit" class="form-control btn btn-info center-block" value="Update">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{{else}}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Animal Register</h3>
+    </div>
+    <div class="panel-body">
+        <form action="/animal/new" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="name" name="name" class="form-control" type="text">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Admittance</label>
+                        <input id="Admittance" name="Admittance" class="form-control" type="date">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="form-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="male" value="0">
+                                Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="female" value="1">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select class="form-control">
+                            {{#if types}}
+                            {{#each types}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                            {{/if}}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Breed</label>
+                        <select class="form-control">
+                            {{#if breeds}}
+                            {{#each breeds}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                            {{/if}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="submit" class="form-control btn btn-info center-block" value="Add">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{{/if}}
+
+{{/partial}}
+
+{{> layout.hbs}}
