@@ -3,7 +3,14 @@
 {{#if editBreed}}
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Edit Breed</h3>
+        <div class="row">
+            <div class="col-md-11">
+                <h3 class="panel-title">Edit Breed</h3>
+            </div>
+            <div class="col-md-1">
+                <p class="control-links" data-placement="top" data-toggle="tooltip" title="Go Back"><a href="/type/{{idType}}/view" class="btn btn-default btn-xs" data-title="Go Back"><span class="glyphicon glyphicon-arrow-left"></span></a></p>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
         <form action="/type/{{idType}}/breed/{{editBreed.id}}/update" method="post">
@@ -35,7 +42,14 @@
 
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Breed Register</h3>
+        <div class="row">
+            <div class="col-md-11">
+                <h3 class="panel-title">Edit Breed</h3>
+            </div>
+            <div class="col-md-1">
+                <p class="control-links" data-placement="top" data-toggle="tooltip" title="Go Back"><a href="/type/{{idType}}/view" class="btn btn-default btn-xs" data-title="Go Back"><span class="glyphicon glyphicon-arrow-left"></span></a></p>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
         <form action="/type/{{idType}}/breed/new" method="post">
