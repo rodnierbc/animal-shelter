@@ -1,16 +1,16 @@
 package models;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Animal {
     private int id;
     private String name;
     private int gender;
-    private LocalDateTime admittanceDate;
+    private LocalDate admittanceDate;
     private int typeId;
     private int breedId;
 
-    public Animal(String name, int gender, LocalDateTime admittanceDate, int typeId, int breedId){
+    public Animal(String name, int gender, LocalDate admittanceDate, int typeId, int breedId){
         this.name = name;
         this.gender = gender;
         this.admittanceDate = admittanceDate;
@@ -42,11 +42,11 @@ public class Animal {
         this.gender = gender;
     }
 
-    public LocalDateTime getAdmittanceDate() {
+    public LocalDate getAdmittanceDate() {
         return admittanceDate;
     }
 
-    public void setAdmittanceDate(LocalDateTime admittanceDate) {
+    public void setAdmittanceDate(LocalDate admittanceDate) {
         this.admittanceDate = admittanceDate;
     }
 

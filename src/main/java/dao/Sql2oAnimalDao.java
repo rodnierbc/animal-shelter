@@ -18,10 +18,14 @@ public class Sql2oAnimalDao implements AnimalDao {
 
     @Override
     public void add(Animal animal) {
-        String sql = "INSERT INTO animals (name, gender, admittanceDate, typeId, breedId) VALUES (:name, :gender, :admittanceDate, :typeId, :breedId)";
+        String sql = "INSERT INTO animals (name, gender, admittanceDate, typeId, breedId) VALUES (:name, :gender, date_format(unix_timestamp(:admittanceDate, yyyyMMdd).cast(timestamp), yyyy-MM-dd), :typeId, :breedId)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
-                    .bind(animal)
+                    .addParameter("name", animal.getName())
+                    .addParameter("gender", animal.getGender())
+                    .addParameter("admittanceDate",animal.getAdmittanceDate())
+                    .addParameter("typeId", animal.getTypeId())
+                    .addParameter("breedId", animal.getBreedId())
                     .executeUpdate()
                     .getKey();
             animal.setId(id);

@@ -1,6 +1,6 @@
 SET MODE PostgreSQL;
 
-CREATE TABLE IF NOT EXISTS amimals (
+CREATE TABLE IF NOT EXISTS animals (
   id int PRIMARY KEY auto_increment,
   name VARCHAR,
   gender BIT,
@@ -28,3 +28,5 @@ CREATE TABLE IF NOT EXISTS types (
  name VARCHAR,
  description VARCHAR
 );
+ALTER TABLE animals
+ALTER COLUMN admittanceDate TIMESTAMP;

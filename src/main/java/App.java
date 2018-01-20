@@ -1,16 +1,23 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import dao.Sql2oAnimalDao;
 import dao.Sql2oBreedDao;
 import dao.Sql2oTypeDao;
+import models.Animal;
 import models.Type;
 import models.Breed;
+import models.Animal;
 import org.sql2o.Sql2o;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import static spark.Spark.*;
+import java.time.format.DateTimeFormatter;
 
 
 
@@ -21,13 +28,15 @@ public class App {
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         Sql2oTypeDao typeDao = new Sql2oTypeDao(sql2o);
         Sql2oBreedDao breedDao = new Sql2oBreedDao(sql2o);
+        Sql2oAnimalDao animalDao = new Sql2oAnimalDao(sql2o);
+        DateTimeFormatter dTF = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 
         //Type-------------------------------------------------------------
         get("/type/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "type/type-form.hbs");
         }, new HandlebarsTemplateEngine());
-        get("/type", (request, response) -> {
+        get("/", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
             model.put("types", types);
@@ -154,11 +163,37 @@ public class App {
         get("/animal/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
-            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();//need to change
+            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();//need to change in the future
             model.put("types", types);
             model.put("breeds", breeds);
             return new ModelAndView(model, "animal/animal-form.hbs");
         }, new HandlebarsTemplateEngine());
+        post("/animal/new", (Request request, Response response) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = request.queryParams("name");
+            //int gender = Integer.parseInt(request.queryParams("gender"));
+            int gender = 1;
+            LocalDate admittanceDate = LocalDate.parse(request.queryParams("admittanceDate"));
+            int typeId = Integer.parseInt(request.queryParams("typeId"));
+            int breedId = Integer.parseInt(request.queryParams("breedId"));
+            Animal animal = new Animal(name, gender, admittanceDate, typeId, breedId);
+            animalDao.add(animal);
+            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
+            model.put("animals", animals);
+            return new ModelAndView(model, "animal/index.hbs");
+        }, new HandlebarsTemplateEngine());
+//        get("/", (request, response) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
+//            model.put("animals", animals);
+//            return new ModelAndView(model, "animal/index.hbs");
+//        }, new HandlebarsTemplateEngine());
+//        get("/animal", (request, response) -> {
+//            Map<String, Object> model = new HashMap<>();
+//            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
+//            model.put("animals", animals);
+//            return new ModelAndView(model, "animal/index.hbs");
+//        }, new HandlebarsTemplateEngine());
 
     }
 }

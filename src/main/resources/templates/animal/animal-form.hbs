@@ -49,7 +49,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Admittance</label>
-                        <input id="Admittance" name="Admittance" class="form-control" type="date">
+                        <input id="admittanceDate" name="admittanceDate" class="form-control" type="date">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -72,7 +72,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Type</label>
-                        <select class="form-control">
+                        <select class="form-control" id="typeId" name="typeId">
                             {{#if types}}
                             {{#each types}}
                             <option value="{{id}}">{{name}}</option>
@@ -84,7 +84,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label>Breed</label>
-                        <select class="form-control">
+                        <select class="form-control" id="breedId" name="breedId">
                             {{#if breeds}}
                             {{#each breeds}}
                             <option value="{{id}}">{{name}}</option>

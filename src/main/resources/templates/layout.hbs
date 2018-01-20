@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{{#block "title"}}Hack-a-Thons Tracker{{/block}}</title>
+    <title>{{#block "title"}}Animal Shelter{{/block}}</title>
     <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -20,23 +20,14 @@
         </div>
             <ul class="nav navbar-nav">
                 <li role="presentation"><a href="#">Dashboard</a></li>
-                <li role="presentation"><a href="#">Animals</a></li>
+                <li role="presentation"><a href="/animal/new">Animals</a></li>
                 <li role="presentation"><a href="#">Customers</a></li>
                 <li role="presentation" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                         Types <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li role="presentation"><a href="/type/new">Create a new Type</a></li>
-                    </ul>
-                </li>
-                <li role="presentation" class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        Breed <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li role="presentation"><a href="/breed">Admin Breeds</a></li>
-                        <li role="presentation"><a href="/breed/new">Create a new Breed</a></li>
+                        <li role="presentation"><a href="/">Admin types</a></li>
                     </ul>
                 </li>
             </ul>

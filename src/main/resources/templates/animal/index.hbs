@@ -1,0 +1,61 @@
+{{#partial "content"}}
+
+{{#if delete}}
+<div class="alert alert-success alert-dismissable">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> the animal was deleted.
+</div>
+{{/if}}
+
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">Animals</h3>
+    </div>
+    <div class="panel-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Admittance Date</th>
+                <th>Type</th>
+                <th>Breed</th>
+                <th></th>
+
+            </tr>
+            </thead>
+            <tbody>
+            {{#if animals}}
+            {{#each animals}}
+            <tr>
+                <th scope="row">1</th>
+                <td>{{name}}</td>
+                <td>{{gender}}</td>
+                <td>{{admittanceDate}}</td>
+                <td>{{typeId}}</td>
+                <td>{{breedId}}</td>
+                <td>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <p data-placement="top" data-toggle="tooltip" title="View"><a href="/animal/{{id}}/view" class="btn btn-warning btn-xs" data-title="View"><span class="glyphicon glyphicon-eye-open"></span></a></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p data-placement="top" data-toggle="tooltip" title="Edit"><a href="/animal/{{id}}/update" class="btn btn-primary btn-xs" data-title="Edit"><span class="glyphicon glyphicon-pencil"></span></a></p>
+                        </div>
+                        <div class="col-md-2">
+                            <p data-placement="top" data-toggle="tooltip" title="Delete"><a href="/animal/{{id}}/delete" class="btn btn-danger btn-xs" data-title="Delete"><span class="glyphicon glyphicon-trash"></span></a></p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {{/each}}
+            {{/if}}
+            </tbody>
+        </table>
+    </div>
+</div>
+{{/partial}}
+
+{{> layout.hbs}}
