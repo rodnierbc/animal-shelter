@@ -3,28 +3,69 @@
 {{#if editAnimal}}
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Edit Type</h3>
+        <h3 class="panel-title">Edit Animal</h3>
     </div>
     <div class="panel-body">
-        <form action="/type/{{editType.id}}/update" method="post">
+        <form action="/animal/{{editAnimal.id}}/update" method="post">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input id="newName" name="newName" class="form-control" type="text"  value="{{editAnimal.name}}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Admittance</label>
+                        <input id="newAdmittanceDate" name="newAdmittanceDate" class="form-control" type="date" value="{{editAnimal.admittanceDate}}">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="form-group">
+                            <label class="radio-inline">
+                                <input type="radio" name="newGender" id="newMale" value="true">
+                                Male
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="gender" id="newFemale" value="false">
+                                Female
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Name</label>
-                        <input id="nameUpdate" name="nameUpdate" class="form-control input-sm" type="text" value="{{editType.name}}">
+                        <label>Type</label>
+                        <select class="form-control" id="newTypeId" name="newTypeId">
+                            {{#if types}}
+                            {{#each types}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                            {{/if}}
+                        </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label>Description</label>
-                        <input id="descriptionUpdate" name="descriptionUpdate" class="form-control input-sm" type="text" value="{{editType.description}}">
+                        <label>Breed</label>
+                        <select class="form-control" id="newBreedId" name="newBreedId">
+                            {{#if breeds}}
+                            {{#each breeds}}
+                            <option value="{{id}}">{{name}}</option>
+                            {{/each}}
+                            {{/if}}
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-3">
-                        <input type="submit" class="form-control btn btn-info center-block" value="Update">
+                        <input type="submit" class="form-control btn btn-info center-block" value="Edit">
                     </div>
                 </div>
             </div>
@@ -32,7 +73,11 @@
     </div>
 </div>
 {{else}}
-
+{{#if flag}}
+<div class="alert alert-warning alert-dismissable">
+    <strong>There are no types or breeds available to create an animal, to configure types and breeds you can <a href="/type/new">click here</a></strong>.
+</div>
+{{else}}
 <div class="panel panel-info">
     <div class="panel-heading">
         <h3 class="panel-title">Animal Register</h3>
@@ -57,11 +102,11 @@
                         <label>Gender</label>
                         <div class="form-group">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="male" value="0">
+                                <input type="radio" name="gender" id="male" value="true">
                                 Male
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" id="female" value="1">
+                                <input type="radio" name="gender" id="female" value="false">
                                 Female
                             </label>
                         </div>
@@ -104,6 +149,7 @@
         </form>
     </div>
 </div>
+{{/if}}
 {{/if}}
 
 {{/partial}}

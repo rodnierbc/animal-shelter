@@ -16,7 +16,7 @@ public interface AnimalDao {
     Animal findById(int id);
 
     //update
-    void update(int id, String name, int gender, LocalDateTime admittanceDate, int typeId, int breedId);
+    void update(int id, String name, boolean gender, String admittanceDate, int typeId, int breedId);
 
     //delete
     void deleteById(int id);

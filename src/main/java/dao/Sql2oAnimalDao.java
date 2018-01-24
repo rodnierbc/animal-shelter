@@ -18,7 +18,7 @@ public class Sql2oAnimalDao implements AnimalDao {
 
     @Override
     public void add(Animal animal) {
-        String sql = "INSERT INTO animals (name, gender, admittanceDate, typeId, breedId) VALUES (:name, :gender, date_format(unix_timestamp(:admittanceDate, yyyyMMdd).cast(timestamp), yyyy-MM-dd), :typeId, :breedId)";
+        String sql = "INSERT INTO animals (name, gender, admittanceDate, typeId, breedId) VALUES (:name, :gender, :admittanceDate, :typeId, :breedId)";
         try(Connection con = sql2o.open()){
             int id = (int) con.createQuery(sql)
                     .addParameter("name", animal.getName())
@@ -52,15 +52,15 @@ public class Sql2oAnimalDao implements AnimalDao {
     }
 
     @Override
-    public void update(int id, String newName, int newGender, LocalDateTime newAdmittanceDate, int newTypeId, int newBreedId) {
-        String sql = "UPDATE types SET (name, gender, newAdmittanceDate, typeId, breedId) = (:name, :gender, :admittanceDate, :typeId, :breedId) WHERE id=:id";
+    public void update(int id, String name, boolean gender, String admittanceDate, int typeId, int breedId) {
+        String sql = "UPDATE animals SET (name, gender, admittanceDate, typeId, breedId) = (:name, :gender, :admittanceDate, :typeId, :breedId) WHERE id=:id";
         try(Connection con = sql2o.open()){
             con.createQuery(sql)
-                    .addParameter("name", newName)
-                    .addParameter("gender", newGender)
-                    .addParameter("admittanceDate", newAdmittanceDate)
-                    .addParameter("typeId", newTypeId)
-                    .addParameter("breedId", newBreedId)
+                    .addParameter("name", name)
+                    .addParameter("gender", gender)
+                    .addParameter("admittanceDate", admittanceDate)
+                    .addParameter("typeId", typeId)
+                    .addParameter("breedId", breedId)
                     .addParameter("id", id)
                     .executeUpdate();
         } catch (Sql2oException ex) {

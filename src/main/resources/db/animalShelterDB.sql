@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS animals (
   id int PRIMARY KEY auto_increment,
   name VARCHAR,
   gender BIT,
-  admittanceDate TIMESTAMP,
+  admittanceDate VARCHAR,
   breedId INTEGER,
   typeId INTEGER
 );
@@ -29,4 +29,4 @@ CREATE TABLE IF NOT EXISTS types (
  description VARCHAR
 );
 ALTER TABLE animals
-ALTER COLUMN admittanceDate TIMESTAMP;
+ALTER COLUMN admittanceDate VARCHAR;

@@ -1,5 +1,6 @@
 package dao;
 
+import models.Breed;
 import models.Type;
 import org.junit.After;
 import org.junit.Before;
@@ -17,6 +18,7 @@ import static org.junit.Assert.*;
 public class Sql2oTypeDaoTest {
 
     private Sql2oTypeDao typeDao;
+    private Sql2oBreedDao breedDao;
     private Connection conn;
 
     @Before
@@ -24,6 +26,7 @@ public class Sql2oTypeDaoTest {
         String connectionString = "jdbc:h2:mem:testing;INIT=RUNSCRIPT from 'classpath:db/animalShelterDB.sql'";
         Sql2o sql2o = new Sql2o(connectionString, "", "");
         typeDao = new Sql2oTypeDao(sql2o);
+        breedDao =new Sql2oBreedDao(sql2o);
         conn = sql2o.open();
     }
 
@@ -69,12 +72,16 @@ public class Sql2oTypeDaoTest {
     }
 
     @Test
-    public void deleteByIdDeletesCorrectType() throws Exception {
+    public void deleteByIdDeletesCorrectTypeAndBreed() throws Exception {
         Type type = setupNewType();
+        Breed breed = new Breed("breed","breed",1);
         typeDao.add(type);
+        breedDao.add(breed);
         typeDao.deleteById(type.getId());
         assertEquals(0, typeDao.getAll().size());
+        assertEquals(0, breedDao.getAll().size());
     }
+
     @Test
     public void clearAllClearsAll(){
         Type type1 = setupNewType();

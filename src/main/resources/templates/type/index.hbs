@@ -1,16 +1,22 @@
 {{#partial "content"}}
-
 {{#if delete}}
 <div class="alert alert-success alert-dismissable">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> the type was deleted.
+    <strong>Success!</strong> The type of animal and the races associated with it were deleted.
 </div>
 {{/if}}
 
 
 <div class="panel panel-info">
     <div class="panel-heading">
-        <h3 class="panel-title">Types of Animals</h3>
+        <div class="row">
+            <div class="col-md-11">
+                <h3 class="panel-title">Type of Animals</h3>
+            </div>
+            <div class="col-md-1">
+                <p class="control-links" data-placement="top" data-toggle="tooltip" title="Add a new type"><a href="/type/new"class="btn btn-default btn-xs" data-title="Add a new type"><span class="glyphicon glyphicon-plus"></span></a></p>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
         <table class="table">

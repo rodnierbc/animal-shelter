@@ -1,0 +1,28 @@
+{{#partial "content"}}
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-10">
+                <h3 class="panel-title">Animal details</h3>
+            </div>
+            <div class="col-md-1">
+                <p class="control-links" data-placement="top" data-toggle="tooltip" title="Go Back"><a href="/" class="btn btn-default btn-xs" data-title="Go Back"><span class="glyphicon glyphicon-arrow-left"></span></a></p>
+            </div>
+            <div class="col-md-1">
+                <p class="control-links" data-placement="top" data-toggle="tooltip" title="Edit this Animal"><a href="/animal/{{animal.id}}/update"class="btn btn-default btn-xs" data-title="Edit this Bread"><span class="glyphicon glyphicon-pencil"></span></a></p>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <p>Name: {{ animal.name }}</p>
+        <p>Admittance Date: {{ animal.admittanceDate }}</p>
+        <p>Gender: {{ animal.gender }}</p>
+        <p>Type: {{ type.name }}</p>
+        <p>Breed: {{ breed.name }}</p>
+    </div>
+</div>
+
+{{/partial}}
+
+{{> layout.hbs}}

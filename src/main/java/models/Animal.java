@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Animal {
     private int id;
     private String name;
-    private int gender;
-    private LocalDate admittanceDate;
+    private boolean gender;
+    private String admittanceDate;
     private int typeId;
     private int breedId;
 
-    public Animal(String name, int gender, LocalDate admittanceDate, int typeId, int breedId){
+    public Animal(String name, boolean gender, String admittanceDate, int typeId, int breedId){
         this.name = name;
         this.gender = gender;
         this.admittanceDate = admittanceDate;
@@ -34,19 +34,19 @@ public class Animal {
         this.name = name;
     }
 
-    public int getGender() {
+    public boolean getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(boolean gender) {
         this.gender = gender;
     }
 
-    public LocalDate getAdmittanceDate() {
+    public String getAdmittanceDate() {
         return admittanceDate;
     }
 
-    public void setAdmittanceDate(LocalDate admittanceDate) {
+    public void setAdmittanceDate(String admittanceDate) {
         this.admittanceDate = admittanceDate;
     }
 
@@ -85,7 +85,7 @@ public class Animal {
     public int hashCode() {
         int result = name.hashCode();
         result = admittanceDate.hashCode();
-        result = 31 * result + gender;
+        result = 31 * (gender ? 0 : 1);
         result = 31 * result + id;
         result = 31 * result + typeId;
         result = 31 * result + breedId;

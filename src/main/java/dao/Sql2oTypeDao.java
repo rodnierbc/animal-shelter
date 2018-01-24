@@ -65,14 +65,20 @@ public class Sql2oTypeDao implements TypeDao {
 
     @Override
     public void deleteById(int id) {
-        String sql = "DELETE from types WHERE id=:id";
+        String sql = "DELETE from types WHERE id = :id";
+        String deleteBreeds = "DELETE from breeds WHERE typeId = :typeId";
         try (Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("id", id)
                     .executeUpdate();
+            con.createQuery(deleteBreeds)
+                    .addParameter("typeId", id)
+                    .executeUpdate();
+
         } catch (Sql2oException ex){
             System.out.println(ex);
         }
+
     }
 
     @Override

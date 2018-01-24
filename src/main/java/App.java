@@ -17,7 +17,7 @@ import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import static spark.Spark.*;
-import java.time.format.DateTimeFormatter;
+
 
 
 
@@ -29,14 +29,13 @@ public class App {
         Sql2oTypeDao typeDao = new Sql2oTypeDao(sql2o);
         Sql2oBreedDao breedDao = new Sql2oBreedDao(sql2o);
         Sql2oAnimalDao animalDao = new Sql2oAnimalDao(sql2o);
-        DateTimeFormatter dTF = DateTimeFormatter.ofPattern("yyyy-mm-dd");
 
         //Type-------------------------------------------------------------
         get("/type/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "type/type-form.hbs");
         }, new HandlebarsTemplateEngine());
-        get("/", (request, response) -> {
+        get("/types", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
             model.put("types", types);
@@ -162,8 +161,12 @@ public class App {
         //animal ---------------------------------------------
         get("/animal/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
+            String flag = "there are no available types or breeds";
             ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
             ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();//need to change in the future
+            if(breeds.size() == 0 || types.size() == 0){
+                model.put("flag", flag);
+            }
             model.put("types", types);
             model.put("breeds", breeds);
             return new ModelAndView(model, "animal/animal-form.hbs");
@@ -171,9 +174,8 @@ public class App {
         post("/animal/new", (Request request, Response response) -> {
             Map<String, Object> model = new HashMap<>();
             String name = request.queryParams("name");
-            //int gender = Integer.parseInt(request.queryParams("gender"));
-            int gender = 1;
-            LocalDate admittanceDate = LocalDate.parse(request.queryParams("admittanceDate"));
+            boolean gender = Boolean.parseBoolean(request.queryParams("gender"));
+            String admittanceDate = request.queryParams("admittanceDate");
             int typeId = Integer.parseInt(request.queryParams("typeId"));
             int breedId = Integer.parseInt(request.queryParams("breedId"));
             Animal animal = new Animal(name, gender, admittanceDate, typeId, breedId);
@@ -182,18 +184,58 @@ public class App {
             model.put("animals", animals);
             return new ModelAndView(model, "animal/index.hbs");
         }, new HandlebarsTemplateEngine());
-//        get("/", (request, response) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
-//            model.put("animals", animals);
-//            return new ModelAndView(model, "animal/index.hbs");
-//        }, new HandlebarsTemplateEngine());
-//        get("/animal", (request, response) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
-//            model.put("animals", animals);
-//            return new ModelAndView(model, "animal/index.hbs");
-//        }, new HandlebarsTemplateEngine());
+        get("/", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
+            model.put("animals", animals);
+            return new ModelAndView(model, "animal/index.hbs");
+        }, new HandlebarsTemplateEngine());
+        get("/animal/:id/update", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idAnimal = Integer.parseInt(request.params("id"));
+            Animal editAnimal = animalDao.findById(idAnimal);
+            ArrayList<Type> types = (ArrayList<Type>) typeDao.getAll();
+            ArrayList<Breed> breeds = (ArrayList<Breed>) breedDao.getAll();//need to change in the future
+            model.put("editAnimal", editAnimal);
+            model.put("types", types);
+            model.put("breeds", breeds);
+            return new ModelAndView(model, "animal/animal-form.hbs");
+        }, new HandlebarsTemplateEngine());
+        post("/animal/:id/update", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            String name = request.queryParams("newName");
+            boolean gender = Boolean.parseBoolean(request.queryParams("newGender"));
+            String admittanceDate = request.queryParams("newAdmittanceDate");
+            int typeId = Integer.parseInt(request.queryParams("newTypeId"));
+            int breedId = Integer.parseInt(request.queryParams("newBreedId"));
+            int idAnimal = Integer.parseInt(request.params("id"));
+            animalDao.update(idAnimal, name, gender, admittanceDate, typeId, breedId);
+            Animal animal = animalDao.findById(idAnimal);
+            model.put("animal", animal);
+            model.put("type", typeDao.findById(animal.getTypeId()));
+            model.put("breed", breedDao.findById(animal.getBreedId()));
+            return new ModelAndView(model, "animal/animal-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+        get("animal/:id/view", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idAnimal = Integer.parseInt(request.params("id"));
+            Animal animal = animalDao.findById(idAnimal);
+            Type type = typeDao.findById(animal.getTypeId());
+            model.put("animal", animal);
+            model.put("type", type);
+            model.put("breed", breedDao.findById(animal.getBreedId()));
+            return new ModelAndView(model, "animal/animal-detail.hbs");
+        }, new HandlebarsTemplateEngine());
+        get("/animal/:id/delete", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            int idAnimal= Integer.parseInt(request.params("id"));
+            animalDao.deleteById(idAnimal);
+            ArrayList<Animal> animals = (ArrayList<Animal>) animalDao.getAll();
+            model.put("delete","delete");
+            model.put("animals", animals);
+            return new ModelAndView(model, "animal/index.hbs");
+        }, new HandlebarsTemplateEngine());
+
 
     }
 }
